@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import storyData from '../data/story.json'
 import StoryDisplay from './StoryDisplay'
 import ChoiceButton from './ChoiceButton'
+import backgroundImage from '../assets/background.jpg'
 
 type Choice = {
   text: string
@@ -55,14 +56,17 @@ export default function Game() {
 
   if (currentScene === 'home') {
     return (
-      <div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-b from-red-950 to-red-900">
-        <div className="w-full max-w-md p-6 flex flex-col items-center space-y-8">
-          <h1 className="text-5xl font-bold mb-8 text-center text-red-100 drop-shadow-lg">
-            Lost in the Woods
+      <div 
+        className="min-h-screen w-full flex items-center justify-center bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: `url(${backgroundImage})` }}
+      >
+        <div className="w-full max-w-md p-6 flex flex-col items-center space-y-8 backdrop-blur-sm bg-black/30 rounded-xl">
+          <h1 className="font-['CustomFont'] text-4xl font-bold text-center text-white drop-shadow-lg">
+            LOST IN THE WOODS
           </h1>
           <button
             onClick={() => setCurrentScene('start')}
-            className="w-full px-8 py-4 text-xl bg-red-900 hover:bg-red-800 text-red-200 hover:text-white border border-red-800 rounded-lg transition-all transform hover:scale-105 shadow-2xl"
+            className="font-['CustomFont'] w-full px-8 py-4 text-xl bg-emerald-900/80 hover:bg-emerald-800 text-emerald-200 hover:text-white border border-emerald-800 rounded-lg transition-all transform hover:scale-105 shadow-2xl"
           >
             Begin Journey
           </button>
@@ -76,19 +80,24 @@ export default function Game() {
   }
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-b from-red-950 to-red-900">
+    <div 
+      className="min-h-screen w-full flex items-center justify-center bg-cover bg-center bg-no-repeat"
+      style={{ backgroundImage: `url(${backgroundImage})` }}
+    >
       <div className="w-full max-w-md h-screen flex flex-col items-center justify-center p-4 space-y-8">
-        <div className="w-full">
-          <StoryDisplay text={displayedText} />
-        </div>
-        <div className="w-full flex flex-col items-center gap-3">
-          {!isTyping && scene.choices.map((choice, index) => (
-            <ChoiceButton
-              key={index}
-              text={choice.text}
-              onClick={() => handleChoice(choice.next)}
-            />
-          ))}
+        <div className="w-full backdrop-blur-sm bg-black/30 rounded-xl p-4">
+          <div className="w-full">
+            <StoryDisplay text={displayedText} />
+          </div>
+          <div className="w-full flex flex-col items-center gap-2 mt-2">
+            {!isTyping && scene.choices.map((choice, index) => (
+              <ChoiceButton
+                key={index}
+                text={choice.text}
+                onClick={() => handleChoice(choice.next)}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </div>

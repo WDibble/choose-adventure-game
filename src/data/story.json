@@ -217,10 +217,10 @@
     ]
     },
     "deeper_forest": {
-    "text": "You push deeper into the forest, hoping to find shelter or a source of water. You hear the rustling of leaves and the snapping of twigs, but you can't see what's making the noise.",
+    "text": "The trees loom larger here, their branches creating a thick canopy that blocks out most of the moonlight. Strange sounds echo through the darkness.",
     "choices": [
-        { "text": "Investigate the noise", "next": "investigate_noise_forest" },
-        { "text": "Ignore it and keep moving", "next": "ignore_noise" }
+      { "text": "Look for shelter", "next": "make_shelter" },
+      { "text": "Try to climb a tree for better visibility", "next": "find_landmark" }
     ]
     },
     "press_on_road": {
@@ -238,8 +238,8 @@
     "investigate_noise_forest": {
     "text": "You cautiously approach the source of the noise. You peer through the trees and see a pair of glowing eyes staring back at you.",
     "choices": [
-        { "text": "Back away slowly", "next": "back_away_slowly" },
-        { "text": "Call out to see who's there", "next": "call_out_forest" }
+      { "text": "Back away slowly", "next": "back_away_slowly" },
+      { "text": "Investigate further", "next": "approach_well" }
     ]
     },
     "ignore_noise": {
@@ -267,9 +267,11 @@
     ]
     },
     "follow_stream": {
-    "text": "You follow the stream, hoping it will lead you to a road or a house. The forest starts to thin out, and you see a clearing ahead.",
+    "text": "The stream winds through the forest. You hear the sound of rushing water getting louder - there might be a waterfall ahead.",
     "choices": [
-        { "text": "Head towards the clearing", "next": "head_clearing" }
+      { "text": "Continue following the stream", "next": "head_clearing" },
+      { "text": "Look for a way to cross", "next": "river_path" },
+      { "text": "Rest by the stream", "next": "rest_stream" }
     ]
     },
     "flag_truck": {
@@ -418,9 +420,10 @@
         ]
     },
     "observe_cabin": {
-        "text": "You stay hidden in the shadows, observing the cabin.  You see a figure moving around inside, but you can't make out any details.  You hear a dog barking in the distance.",
+        "text": "From your hiding spot, you observe the cabin carefully. Through the window, you see someone moving inside. They appear to be cooking something over a fire.",
         "choices": [
-        { "text": "Try to sneak closer", "next": "sneak_closer_cabin" }
+          { "text": "Approach and knock", "next": "knock_cabin" },
+          { "text": "Continue watching", "next": "sneak_closer_cabin" }
         ]
     },
     "climb_out": {
@@ -436,21 +439,46 @@
     ]
   },
   "defend_in_car": {
-    "text": "You grip the tire iron, your heart pounding.  The footsteps stop outside the car.  You hear sniffing and scratching at the door.  Suddenly, the door handle rattles violently.",
+    "text": "You grip the tire iron tightly, heart pounding as footsteps approach...",
     "choices": [
       { "text": "Swing the tire iron at the door", "next": "swing_tire_iron" }
     ]
   },
   "follow_sound_deeper": {
-    "text": "The sound leads you further into the darkness.  You stumble over uneven ground, your injured leg throbbing with pain.  You realize you're hopelessly lost.  The sound suddenly stops, and an eerie silence falls over the forest.",
+    "text": "The sound leads you deeper into the darkness. You stumble over uneven ground, your injured leg throbbing with pain. As you push through some bushes, you find yourself in a small clearing with an old well in the center.",
     "choices": [
-      { "text": "Call out for help", "next": "call_help_lost" }
+      { "text": "Investigate the well", "next": "approach_well" },
+      { "text": "Try to find your way back", "next": "find_road_after_shelter" }
     ]
   },
   "approach_well": {
-    "text": "You limp towards the well, hoping to find fresh water.  As you get closer, you hear a splashing sound coming from inside.  You peer into the darkness, but you can't see anything.",
+    "text": "As you near the well, you notice strange markings carved into its stone rim. A splash echoes from its depths.",
     "choices": [
-      { "text": "Drop a stone down the well", "next": "drop_stone_well" }
+      { "text": "Look down the well", "next": "drop_stone_well" },
+      { "text": "Examine the markings", "next": "decipher_markings" },
+      { "text": "Back away slowly", "next": "find_road_after_shelter" }
+    ]
+  },
+  "decipher_markings": {
+    "text": "The markings appear to be an ancient warning. As you study them, you hear footsteps approaching from behind.",
+    "choices": [
+      { "text": "Turn around quickly", "next": "encounter_stranger" },
+      { "text": "Run away", "next": "run_from_well" }
+    ]
+  },
+
+  "encounter_stranger": {
+    "text": "You turn to find an old man in weathered clothes. 'I see you've found the well,' he says. 'Come, it's not safe here after dark.'",
+    "choices": [
+      { "text": "Follow him", "next": "ask_help_cabin" },
+      { "text": "Decline his help", "next": "run_from_well" }
+    ]
+  },
+
+  "run_from_well": {
+    "text": "You sprint away from the well as fast as your injured leg allows. The forest seems less threatening in the direction you're running.",
+    "choices": [
+      { "text": "Keep running", "next": "find_road_after_shelter" }
     ]
   },
   "wait_morning_fire": {
@@ -460,9 +488,10 @@
     ]
   },
   "morning_shelter": {
-    "text": "The first rays of dawn filter through the trees, illuminating the forest in a soft glow.  You emerge from your shelter, stiff and sore but alive.  You need to find help.",
+    "text": "The morning light reveals your surroundings more clearly. You notice smoke rising in the distance - perhaps from a chimney.",
     "choices": [
-      { "text": "Try to find your way back to the road", "next": "find_road_after_shelter" }
+      { "text": "Head towards the smoke", "next": "approach_cabin" },
+      { "text": "Try to find the road", "next": "find_road_after_shelter" }
     ]
   },
   "knock_cabin": {
@@ -484,9 +513,10 @@
     ]
   },
   "wait_in_tree": {
-    "text": "You cling to the tree branch, shivering in the cold night air.  The wolves continue to circle below, their howls echoing through the forest.  Hours pass, and you grow weaker and weaker.",
+    "text": "You cling to the tree branch, shivering in the cold night air. The wolves circle below, but as dawn approaches, they finally lose interest and move on.",
     "choices": [
-      { "text": "Lose your grip and fall from the tree", "next": "death" }
+      { "text": "Carefully climb down", "next": "find_road_after_wolves" },
+      { "text": "Wait longer to be safe", "next": "morning_shelter" }
     ]
   },
   "swing_tire_iron": {

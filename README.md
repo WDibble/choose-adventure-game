@@ -2,11 +2,11 @@
 
 <div align="center">
 
-![Game Preview](https://your-gif-url-here.gif)
+![Game Preview](https://github.com/WDibble/choose-adventure-game/blob/main/src/assets/preview.gif)
 
 A haunting text adventure game built with React, TypeScript, and Tailwind CSS.
 
-[![Live Demo](https://img.shields.io/badge/Demo-Play%20Now-red.svg)](https://your-demo-url.vercel.app)
+[![Live Demo](https://img.shields.io/badge/Demo-Play%20Now-red.svg)](https://lost-in-the-woods.vercel.app/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.5-blue.svg)](https://www.typescriptlang.org/)
 [![React](https://img.shields.io/badge/React-18.3-61dafb.svg)](https://reactjs.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4-38bdf8.svg)](https://tailwindcss.com/)

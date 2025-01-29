@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import storyData from '../data/story.json'
 import StoryDisplay from './StoryDisplay'
 import ChoiceButton from './ChoiceButton'
+import LoadingScreen from './LoadingScreen'
 import backgroundImage from '../assets/background.jpg'
 
 type Choice = {
@@ -22,9 +23,16 @@ export default function Game() {
   const [currentScene, setCurrentScene] = useState<string>('home')
   const [displayedText, setDisplayedText] = useState('')
   const [isTyping, setIsTyping] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
+  const [isTransitioning, setIsTransitioning] = useState(false)
   
   const story = storyData as StoryData
   const scene = currentScene === 'home' ? null : story[currentScene]
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoading(false), 1500)
+    return () => clearTimeout(timer)
+  }, [])
 
   useEffect(() => {
     if (!scene) return
@@ -51,7 +59,24 @@ export default function Game() {
   }, [scene])
 
   const handleChoice = (nextScene: string) => {
+    setIsTransitioning(true)
     setCurrentScene(nextScene)
+    // Remove transition state after a brief delay
+    setTimeout(() => setIsTransitioning(false), 50)
+  }
+
+  useEffect(() => {
+    if (!isTransitioning) {
+      window.history.pushState(
+        { scene: currentScene },
+        '',
+        `/${currentScene === 'home' ? '' : currentScene}`
+      )
+    }
+  }, [currentScene, isTransitioning])
+
+  if (isLoading) {
+    return <LoadingScreen />
   }
 
   if (currentScene === 'home') {
@@ -60,13 +85,19 @@ export default function Game() {
         className="min-h-screen w-full flex items-center justify-center bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: `url(${backgroundImage})` }}
       >
-        <div className="w-full max-w-md p-6 flex flex-col items-center space-y-8 backdrop-blur-sm bg-black/30 rounded-xl">
-          <h1 className="font-['CustomFont'] text-4xl font-bold text-center text-white drop-shadow-lg">
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 to-black/60 pointer-events-none z-0" />
+        <div className="w-full max-w-md p-6 flex flex-col items-center space-y-8 backdrop-blur-sm bg-black/30 rounded-xl z-10">
+          <h1 className="font-['CustomFont'] text-5xl font-bold text-center text-emerald-50 drop-shadow-lg animate-fade-in">
             LOST IN THE WOODS
           </h1>
           <button
             onClick={() => setCurrentScene('start')}
-            className="font-['CustomFont'] w-full px-8 py-4 text-xl bg-emerald-900/80 hover:bg-emerald-800 text-emerald-200 hover:text-white border border-emerald-800 rounded-lg transition-all transform hover:scale-105 shadow-2xl"
+            className="font-['CustomFont'] w-full px-8 py-4 text-xl 
+                       bg-emerald-900/80 hover:bg-emerald-800 
+                       text-emerald-200 hover:text-white 
+                       border border-emerald-800 rounded-lg 
+                       transition-all transform hover:scale-105 
+                       shadow-2xl animate-slide-up"
           >
             Begin Journey
           </button>
@@ -76,7 +107,13 @@ export default function Game() {
   }
 
   if (!scene) {
-    return <div>Error: Scene not found</div>
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-red-950/50">
+        <div className="p-4 bg-red-900/50 rounded-lg text-red-100">
+          Error: Scene not found. Please restart the game.
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -84,13 +121,26 @@ export default function Game() {
       className="min-h-screen w-full flex items-center justify-center bg-cover bg-center bg-no-repeat"
       style={{ backgroundImage: `url(${backgroundImage})` }}
     >
+      <div 
+        className="absolute inset-0 bg-gradient-to-b from-black/40 to-black/60 
+                   pointer-events-none z-0"
+      />
       <div className="w-full max-w-md h-screen flex flex-col items-center justify-center p-4 space-y-8">
+        <div className="absolute top-4 right-4 flex gap-2">
+          <button 
+            onClick={() => setCurrentScene('home')}
+            className="px-3 py-1 text-sm bg-emerald-900/50 hover:bg-emerald-800/50 
+                       text-emerald-100 rounded border border-emerald-700/30"
+          >
+            Restart
+          </button>
+        </div>
         <div className="w-full backdrop-blur-sm bg-black/30 rounded-xl p-4">
-          <div className="w-full">
+          <div className={`w-full transition-opacity duration-200 ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}>
             <StoryDisplay text={displayedText} />
           </div>
           <div className="w-full flex flex-col items-center gap-2 mt-2">
-            {!isTyping && scene.choices.map((choice, index) => (
+            {!isTyping && !isTransitioning && scene.choices.map((choice, index) => (
               <ChoiceButton
                 key={index}
                 text={choice.text}

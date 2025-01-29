@@ -30,7 +30,7 @@ Lost in the Woods is a modern take on classic text adventures like Zork and Choo
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/lost-in-the-woods.git
+git clone https://https://github.com/WDibble/choose-adventure-game.git
 ```
 
 2. Install dependencies:
